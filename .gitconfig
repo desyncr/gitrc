@@ -1,0 +1,37 @@
+[push]
+    default = simple
+[core]
+    excludesfile = ~/.global_ignore
+    pager = less
+[diff]
+    external = ext-diff
+    tool = icdiff
+
+[difftool "icdiff"]
+    cmd = icdiff $LOCAL $REMOTE
+^()
+[alias]
+    co = checkout
+    st = status
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    up = !git fetch --all && git pull
+    fu = reset --hard
+
+    ec = config --global -e
+    #up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    cob = checkout -b
+    cm = !git add -A && git commit -m
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    wip = !git add -u && git commit -m "WIP"
+        undo = reset HEAD~1 --mixed
+    amend = commit -a --amend
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+    bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+    # http://haacked.com/archive/2014/07/28/github-flow-aliases/
+    compare = "! git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative $1..$2"
+    search="log --full-diff --stat -p --grep "
+[branch]
+    autosetuprebase = always
