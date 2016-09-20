@@ -9,7 +9,7 @@
 
 [difftool "icdiff"]
     cmd = icdiff $LOCAL $REMOTE
-^()
+
 [alias]
     co = checkout
     st = status
